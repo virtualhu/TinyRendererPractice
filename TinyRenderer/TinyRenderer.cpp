@@ -143,7 +143,7 @@ void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color)
     }
 }
 
-bool inTriangle(Vec3f* threePoint, Vec3f p, float& px, float& py, float &pz)
+bool inTriangle(Vec3f* threePoint, Vec3f p, float& r0, float& r1, float &r2)
 {
     Vec2f v2 = Vec2f(p.x - threePoint[0].x, p.y - threePoint[0].y);
     Vec2f v0 = Vec2f(threePoint[1].x - threePoint[0].x, threePoint[1].y - threePoint[0].y);
@@ -156,11 +156,14 @@ bool inTriangle(Vec3f* threePoint, Vec3f p, float& px, float& py, float &pz)
     float d12 = v1 * v2;
 
     float t = (d00 * d11 - d01 * d01);
-    px = (d02 * d11 - d12 * d01) / t;
-    py = (d12 * d00 - d01 * d02) / t;
-    pz = 1 - px - py;
+    float m = (d02 * d11 - d12 * d01) / t;
+    float n = (d12 * d00 - d01 * d02) / t;
     
-    return px >= 0 && py >= 0 && px + py <= 1;
+    r1 = m;
+    r2 = n;
+    r0 = 1 - m - n;
+    
+    return m >= 0 && n >= 0 && m + n <= 1;
 }
 
 void triangle(Vec3f* pt3, Vec3f* uv3, TGAImage& image, TGAColor color)
@@ -176,9 +179,11 @@ void triangle(Vec3f* pt3, Vec3f* uv3, TGAImage& image, TGAColor color)
         }
     }
 
-    float r0, r1, r2;
+    
     Vec3f p;
     Vec3f uv;
+    float r0 = 0, r1 = 0, r2 = 0;
+
     for (p.x = min.x; p.x <= max.x; ++p.x)
     {
         for (p.y = min.y; p.y <= max.y; ++p.y)
@@ -194,10 +199,9 @@ void triangle(Vec3f* pt3, Vec3f* uv3, TGAImage& image, TGAColor color)
                 zbuff[idx] = p.z;
 
                 uv = uv3[0] * r0 + uv3[1] * r1 + uv3[2] * r2;
-                Vec2i uvi = Vec2i(uv.x * texture.get_width()-1, (1-uv.y) * texture.get_height()-1);
+                Vec2i uvi = Vec2i(uv.x * texture.get_width(), (1-uv.y) * texture.get_height());
                 TGAColor tclr = texture.get(uvi.x, uvi.y);
                 TGAColor use = TGAColor((float)color.r / 255 * tclr.r, (float)color.g / 255 * tclr.g, (float)color.b / 255 * tclr.b, tclr.a);
-                //TGAColor add = TGAColor(color.r + tclr.r, color.g + tclr.g, color.b + color.b, 255);
                 image.set(p.x, p.y, use);
             }
         }
