@@ -16,6 +16,13 @@
     <Filter Include="tga">
       <UniqueIdentifier>{e1444c21-155e-4429-be81-e21b318d16b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rmtc">
+      <UniqueIdentifier>{e4e7be96-75b3-4465-a399-97c6c1a25ecf}</UniqueIdentifier>
+      <Extensions>rmtc/*</Extensions>
+    </Filter>
+    <Filter Include="rmtc\math">
+      <UniqueIdentifier>{634a7f2d-67db-4d26-891f-c7ec3eb52d71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TinyRenderer.cpp">
@@ -27,6 +34,15 @@
     <ClCompile Include="model.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="rmtc\Surface.cpp">
+      <Filter>rmtc</Filter>
+    </ClCompile>
+    <ClCompile Include="rmtc\math\Color.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="rmtc\SoftRender.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tgaimage.h">
@@ -36,6 +52,27 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="model.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\math.h">
+      <Filter>rmtc</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\Surface.h">
+      <Filter>rmtc</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\math\Vector2.h">
+      <Filter>rmtc\math</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\math\Vector3.h">
+      <Filter>rmtc\math</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\math\Color.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\SoftRender.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\math\PreDefine.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
