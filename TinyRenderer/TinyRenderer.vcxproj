@@ -139,23 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="rmtc\math\Color.cpp" />
     <ClCompile Include="model.cpp" />
-    <ClCompile Include="rmtc\Surface.cpp" />
-    <ClCompile Include="rmtc\SoftRender.cpp" />
     <ClCompile Include="tgaimage.cpp" />
     <ClCompile Include="TinyRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="rmtc\math\Color.h" />
     <ClInclude Include="geometry.h" />
     <ClInclude Include="model.h" />
-    <ClInclude Include="rmtc\math.h" />
-    <ClInclude Include="rmtc\math\PreDefine.h" />
-    <ClInclude Include="rmtc\math\Vector2.h" />
-    <ClInclude Include="rmtc\math\Vector3.h" />
-    <ClInclude Include="rmtc\Surface.h" />
-    <ClInclude Include="rmtc\SoftRender.h" />
     <ClInclude Include="tgaimage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

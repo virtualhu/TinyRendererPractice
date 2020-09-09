@@ -34,15 +34,6 @@
     <ClCompile Include="model.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="rmtc\Surface.cpp">
-      <Filter>rmtc</Filter>
-    </ClCompile>
-    <ClCompile Include="rmtc\math\Color.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="rmtc\SoftRender.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tgaimage.h">
@@ -52,27 +43,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="model.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="rmtc\math.h">
-      <Filter>rmtc</Filter>
-    </ClInclude>
-    <ClInclude Include="rmtc\Surface.h">
-      <Filter>rmtc</Filter>
-    </ClInclude>
-    <ClInclude Include="rmtc\math\Vector2.h">
-      <Filter>rmtc\math</Filter>
-    </ClInclude>
-    <ClInclude Include="rmtc\math\Vector3.h">
-      <Filter>rmtc\math</Filter>
-    </ClInclude>
-    <ClInclude Include="rmtc\math\Color.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="rmtc\SoftRender.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="rmtc\math\PreDefine.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

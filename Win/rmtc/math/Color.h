@@ -8,7 +8,7 @@ namespace rmtc
 		union
 		{
 			unsigned int v;
-			struct { unsigned char r, g, b, a; };
+			struct { unsigned char b, g, r, a; };
 			unsigned char raw[4];
 		};
 
@@ -21,7 +21,13 @@ namespace rmtc
 			b((unsigned char)(blue * 255)),
 			a((unsigned char)(alpha * 255))
 		{}
-
+		Color(const unsigned char* data, int bytesPerPixel):v(0)
+		{
+			for (int i = 0; i < bytesPerPixel; i++) {
+				raw[i] = data[i];
+			}
+		}
+		 
 		float red() const { return (float)r / 255; }
 		float green() const { return (float)g / 255; }
 		float blue() const { return (float)b / 255; }
@@ -54,5 +60,11 @@ namespace rmtc
 			return Color(red() * v.red(), green() * v.green(), blue() * v.blue(), alpha() * v.alpha());
 		}
 		inline unsigned char operator[] (int i) { return raw[i]; }
+
+		static Color White;
+		static Color Red;
+		static Color Green;
+		static Color Blue;
+		static Color Black;
 	};
 }

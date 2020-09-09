@@ -3,19 +3,29 @@
 
 #include "framework.h"
 #include "Win.h"
+#include "rmtc/render/SoftRender.h"
 
 #define MAX_LOADSTRING 100
 
 // 全局变量:
 HINSTANCE hInst;                                // 当前实例
+HWND hWnd;                                      //当前窗口
 WCHAR szTitle[MAX_LOADSTRING];                  // 标题栏文本
 WCHAR szWindowClass[MAX_LOADSTRING];            // 主窗口类名
+
+LONG g_width = 800;
+LONG g_height = 800;
+HDC s_hdcBackbuffer;
+HBITMAP s_hBitmap;
+HBITMAP s_hOldBitmap;
 
 // 此代码模块中包含的函数的前向声明:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+
+rmtc::SoftRender render;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -42,6 +52,40 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
+    
+
+    //初始化设备无关位图header
+    BITMAPINFOHEADER bmphdr = { 0 };
+    bmphdr.biSize = sizeof(BITMAPINFOHEADER);
+    bmphdr.biWidth = g_width;
+    bmphdr.biHeight = -g_height;
+    bmphdr.biPlanes = 1;
+    bmphdr.biBitCount = 32;
+    bmphdr.biSizeImage = g_height * g_width * 4;
+    //创建后缓冲区
+    //先创建一个内存dc
+    
+    //获得前置缓冲区dc
+    HDC hdc = GetDC(hWnd);
+    s_hdcBackbuffer = CreateCompatibleDC(hdc);
+    ReleaseDC(hWnd, hdc);
+
+    //创建设备无关bitmap
+    LPVOID buffPtr;
+    s_hBitmap = CreateDIBSection(nullptr, (PBITMAPINFO)&bmphdr, DIB_RGB_COLORS,
+        &buffPtr, nullptr, 0);
+
+    if (s_hBitmap == NULL)
+    {
+        MessageBox(nullptr, L"create dib section failed!", L"error", MB_OK);
+        return 0;
+    }
+    //将bitmap装入内存dc
+    s_hOldBitmap = (HBITMAP)SelectObject(s_hdcBackbuffer, s_hBitmap);
+
+    render.Init(g_width, g_height, (BYTE*)buffPtr);
+    render.Clear(rmtc::Color::Blue);
+
     // 主消息循环:
     /*while (GetMessage(&msg, nullptr, 0, 0))
     {
@@ -61,6 +105,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
+            render.DrawLine(0, 0, 400, 400, rmtc::Color::Green);
+
+
+            HDC hdc = GetDC(hWnd);
+            BitBlt(hdc, 0, 0, g_width, g_height, s_hdcBackbuffer, 0, 0, SRCCOPY);
+            ReleaseDC(hWnd, hdc);
         }
     }
 
@@ -109,8 +159,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 将实例句柄存储在全局变量中
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+      CW_USEDEFAULT, 0, g_width, g_height, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -159,10 +209,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 在此处添加使用 hdc 的任何绘图代码...
+            //BitBlt(hdc, 0, 0, 10, 10, s_hdcBackbuffer, 0, 90, SRCCOPY);
             EndPaint(hWnd, &ps);
         }
         break;
     case WM_DESTROY:
+        SelectObject(s_hdcBackbuffer, s_hOldBitmap);
+        DeleteDC(s_hdcBackbuffer);
+        DeleteObject(s_hOldBitmap);
         PostQuitMessage(0);
         break;
     default:

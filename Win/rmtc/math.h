@@ -3,6 +3,7 @@
 #include "math/PreDefine.h"
 #include "math/Vector2.h"
 #include "math/Vector3.h"
+#include "math/Vector4.h"
 #include "math/Color.h"
 
 namespace rmtc
@@ -11,4 +12,6 @@ namespace rmtc
 	typedef Vector2<int> Vector2i;
 	typedef Vector3<float> Vector3f;
 	typedef Vector3<int> Vector3i;
+	typedef Vector4<float> Vector4f;
+	typedef Vector4<int> Vector4i;
 }

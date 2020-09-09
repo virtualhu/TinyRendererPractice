@@ -27,7 +27,28 @@
     <ClInclude Include="Win.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SoftRender.h">
+    <ClInclude Include="rmtc\math\Color.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\math\PreDefine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\math\Vector2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\math\Vector3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\math\Vector4.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\render\RenderSurface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\render\SoftRender.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rmtc\math.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,7 +56,16 @@
     <ClCompile Include="Win.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="SoftRender.cpp">
+    <ClCompile Include="rmtc\math\Color.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="rmtc\math\Vector4.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="rmtc\render\RenderSurface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="rmtc\render\SoftRender.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
