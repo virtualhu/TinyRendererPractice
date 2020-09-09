@@ -52,7 +52,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
-    
+    RECT rectWin, rectClient;
+    GetWindowRect(hWnd, &rectWin);
+    GetClientRect(hWnd, &rectClient);
+    int diffW = rectWin.right - rectWin.left - (rectClient.right - rectClient.left);
+    int diffH = rectWin.bottom - rectWin.top - (rectClient.bottom - rectClient.top);
+    int wx = diffW + g_width;
+    int wy = diffH + g_height;
+
+    int sx = (GetSystemMetrics(SM_CXSCREEN) - wx) / 2;
+    int sy = (GetSystemMetrics(SM_CYSCREEN) - wy) / 2;
+    SetWindowPos(hWnd, NULL, sx, sy, wx, wy, (SWP_NOCOPYBITS | SWP_NOZORDER | SWP_SHOWWINDOW));
 
     //初始化设备无关位图header
     BITMAPINFOHEADER bmphdr = { 0 };
@@ -84,7 +94,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     s_hOldBitmap = (HBITMAP)SelectObject(s_hdcBackbuffer, s_hBitmap);
 
     render.Init(g_width, g_height, (BYTE*)buffPtr);
-    render.Clear(rmtc::Color::Blue);
+    render.Clear(rmtc::Color::Gray);
+    render.DrawLine(0, 0, 800, 800, rmtc::Color::Green);
+
 
     // 主消息循环:
     /*while (GetMessage(&msg, nullptr, 0, 0))
@@ -105,7 +117,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            render.DrawLine(0, 0, 400, 400, rmtc::Color::Green);
 
 
             HDC hdc = GetDC(hWnd);
@@ -160,7 +171,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // 将实例句柄存储在全局变量中
 
    hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, g_width, g_height, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {

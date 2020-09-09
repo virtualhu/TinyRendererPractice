@@ -62,9 +62,10 @@ namespace rmtc
 		inline unsigned char operator[] (int i) { return raw[i]; }
 
 		static Color White;
+		static Color Black;
+		static Color Gray;
 		static Color Red;
 		static Color Green;
 		static Color Blue;
-		static Color Black;
 	};
 }
